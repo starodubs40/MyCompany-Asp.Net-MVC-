@@ -195,6 +195,8 @@ namespace MyCompany.Migrations
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[] { "44546e06-8719-4ad8-b88a-f271ae9d6eab", "dcd960b1-b36e-490d-b354-1ff8acbaed2c", "admin", "ADMIN" });
+                        
+                        
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyCompany.Domain;
 
-
-namespace MyCompany.Controllers
+namespace MyCompany.Areas.Manager.Controllers
 {
+    [Area("Manager")]
     public class HomeController : Controller
     {
         private readonly DataManager dataManager;
@@ -14,16 +14,6 @@ namespace MyCompany.Controllers
         }
 
         public IActionResult Index()
-        {
-            return View(dataManager.TextFields.GetTextFieldByCodeWord("PageIndex"));
-        }
-
-        public IActionResult Contacts()
-        {
-            return View(dataManager.TextFields.GetTextFieldByCodeWord("PageContacts"));
-        }
-
-        public IActionResult SignIn()
         {
             return View();
         }

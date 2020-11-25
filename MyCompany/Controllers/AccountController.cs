@@ -33,7 +33,7 @@ namespace MyCompany.Controllers
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
-                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                    Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
                     if (result.Succeeded)
                     {
                         return Redirect(returnUrl ?? "/");

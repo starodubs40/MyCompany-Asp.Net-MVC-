@@ -13,5 +13,9 @@ namespace MyCompany.Domain.Entities
 
         [Display(Name = "Повний опис послуги")]
         public override string Text { get; set; }
+
+        [Display(Name = "Ціна")]
+        public int Price { get; set; }
+
     }
 }

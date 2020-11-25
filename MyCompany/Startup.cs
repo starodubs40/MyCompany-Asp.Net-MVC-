@@ -58,11 +58,25 @@ namespace MyCompany
                 x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
             });
 
+            //настраиваем политику авторизации для Manager area
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy("ManagerArea", policy => { policy.RequireRole("manager"); });
+            });
+
             //добавляем сервисы для контроллеров и представлений (MVC)
             services.AddControllersWithViews(x =>
                 {
                     x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
                 })
+                //выставляем совместимость с asp.net core 3.0
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
+
+
+            services.AddControllersWithViews(x =>
+            {
+                x.Conventions.Add(new ManagerAreaAuthorization("Manager", "ManagerArea"));
+            })
                 //выставляем совместимость с asp.net core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
@@ -90,6 +104,7 @@ namespace MyCompany
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("manager", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
