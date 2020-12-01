@@ -15,7 +15,7 @@ namespace MyCompany.Areas.Manager.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(dataManager.ServiceItems.GetServiceItems());
         }
     }
 }

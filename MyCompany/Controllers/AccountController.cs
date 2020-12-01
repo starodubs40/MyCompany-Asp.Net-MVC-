@@ -48,7 +48,7 @@ namespace MyCompany.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("SignIN", "Home");
         }
     }
 }

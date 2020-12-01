@@ -1,11 +1,10 @@
-﻿@model IQueryable<ServiceItem>
+﻿
 @{
-    TextField textField = ViewBag.TextField;
-
-    ViewBag.Title = textField.MetaTitle;
-    ViewBag.Description = textField.MetaDescription;
-    ViewBag.Keywords = textField.MetaKeywords;
+    ViewData["Title"] = "ShowServiceItems";
 }
+
+
+@model IQueryable<ServiceItem>
 
 <div>
     @if (Model.Any())
@@ -14,14 +13,13 @@
             @foreach (ServiceItem entity in Model)
             {
                 <li>
-                    <a asp-area="" asp-controller="Services" asp-action="Index" asp-route-id="@entity.Id">
+                    <a asp-area="Manager" asp-controller="ServiceItems" asp-action="Edit" asp-route-id="@entity.Id">
                         <img src="~/images/@entity.TitleImagePath" alt="" class="left" />
                     </a>
 
                     <p>@entity.Price $</p>
 
                     <h4>@entity.Title</h4>
-                    <p>@entity.Subtitle</p>
                 </li>
             }
         </ul>
