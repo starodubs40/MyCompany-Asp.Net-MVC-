@@ -39,8 +39,8 @@ namespace MyCompany.Domain
                 Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                 UserName = "admin",
                 NormalizedUserName = "ADMIN",
-                Email = "my@email.com",
-                NormalizedEmail = "MY@EMAIL.COM",
+                Email = "starodubs40@gmail.com",
+                NormalizedEmail = "STARODUBS40@GMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "superpassword"),
                 SecurityStamp = string.Empty
@@ -56,9 +56,9 @@ namespace MyCompany.Domain
             {
                 Id = "2b62472e-4f66-49fa-a20f-e7685b9565d7",
                 UserName = "manager",
-                NormalizedUserName = "MANAGER",
+                NormalizedUserName = "maksdonzovuptown@gmail.com",
                 Email = "my@email.com",
-                NormalizedEmail = "MY@EMAIL.COM",
+                NormalizedEmail = "MAKSDONZOVUPTOWN@GMAIL.COM",
                 EmailConfirmed = true,
                 PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, "superpassword"),
                 SecurityStamp = string.Empty

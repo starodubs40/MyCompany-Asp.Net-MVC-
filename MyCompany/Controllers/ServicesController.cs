@@ -1,9 +1,11 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyCompany.Domain;
 
 namespace MyCompany.Controllers
 {
+
     public class ServicesController : Controller
     {
         private readonly DataManager dataManager;

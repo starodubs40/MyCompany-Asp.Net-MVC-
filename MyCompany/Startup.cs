@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -52,6 +53,21 @@ namespace MyCompany
                 options.SlidingExpiration = true;
             });
 
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.ClientId = "195182314505-gir85b0tcn2hj4bou882e2thc69887m6.apps.googleusercontent.com";
+                    options.ClientSecret = "n_85INCTbYLZTxlkRfWn9DE_";
+                })
+                .AddFacebook(options =>
+                {
+                    options.ClientId = "4056641191051374";
+                    options.ClientSecret = "84db8d0be77a07385b8c4b68f3b73a58";
+                });
+                
+                
+
             //настраиваем политику авторизации для Admin area
             services.AddAuthorization(x =>
             {
@@ -72,13 +88,14 @@ namespace MyCompany
                 //выставляем совместимость с asp.net core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
 
-
+            //добавляем сервисы для контроллеров и представлений(MVC)
             services.AddControllersWithViews(x =>
             {
-                x.Conventions.Add(new ManagerAreaAuthorization("Manager", "ManagerArea"));
+                x.Conventions.Add(new AdminAreaAuthorization("Manager", "ManagerArea"));
             })
                 //выставляем совместимость с asp.net core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

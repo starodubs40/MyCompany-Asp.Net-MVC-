@@ -1,27 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyCompany.Domain;
-
+using MyCompany.Domain.Repositories.Abstract;
 
 namespace MyCompany.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DataManager dataManager;
+        //private readonly DataManager dataManager;
 
-        public HomeController(DataManager dataManager)
+        private readonly ITextFieldsRepository textFieldsRepository;
+
+        public HomeController()
         {
-            this.dataManager = dataManager;
+
         }
 
+        public HomeController(ITextFieldsRepository textFieldsRepository)
+        {
+            this.textFieldsRepository = textFieldsRepository;
+        }
+
+        
         public IActionResult Index()
         {
-            return View(dataManager.TextFields.GetTextFieldByCodeWord("PageIndex"));
+            return View(textFieldsRepository.GetTextFieldByCodeWord("PageIndex"));
         }
 
+      
         public IActionResult Contacts()
         {
-            return View(dataManager.TextFields.GetTextFieldByCodeWord("PageContacts"));
+            return View(textFieldsRepository.GetTextFieldByCodeWord("PageContacts"));
         }
+
 
         public IActionResult SignIn()
         {

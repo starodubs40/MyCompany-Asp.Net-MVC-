@@ -1,7 +1,17 @@
 ﻿@model LoginViewModel
-<div>
+
+@{ ViewBag.Title = "User Login"; }
+
+@*<div style="text-align: center">
     <h1>Вхід в особистий кабінет</h1>
-    <div class="div-box">
+</div>*@
+
+<div class="row">
+
+    <div class=" col-md-6">
+
+        <h1>Local account Login</h1>
+        <hr/>
         <form asp-area="" asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@ViewBag.returnUrl">
             <div asp-validation-summary="All"></div>
             <div>
@@ -24,4 +34,37 @@
             </div>
         </form>
     </div>
+
+    <div class=" col-md-6">
+
+        <h1>External account Login</h1>
+        <hr/>
+        
+        @{ 
+            if (Model.ExternalLogins != null)
+            { 
+
+                if (Model.ExternalLogins.Count == 0 )
+                {
+                    <div>No external logins configured</div>                 
+                }
+                else
+                {
+                    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                        <div>
+                            @foreach (var provider in Model.ExternalLogins)
+                            {
+                                <button type="submit" class="btn btn-primary"
+                                        name="provider" value="@provider.Name"
+                                        title="Login using your @provider.DisplayName account">
+                                    @provider.DisplayName
+                                </button>
+                            }
+                        </div>
+                    </form>
+                }
+            }
+        }
+    </div>
+
 </div>
