@@ -11,11 +11,6 @@ namespace MyCompany.Controllers
 
         private readonly ITextFieldsRepository textFieldsRepository;
 
-        public HomeController()
-        {
-
-        }
-
         public HomeController(ITextFieldsRepository textFieldsRepository)
         {
             this.textFieldsRepository = textFieldsRepository;
