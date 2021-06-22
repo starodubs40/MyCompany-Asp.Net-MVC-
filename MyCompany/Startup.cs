@@ -21,18 +21,18 @@ namespace MyCompany
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //подключаем конфиг из appsetting.json
+            //ГЇГ®Г¤ГЄГ«ГѕГ·Г ГҐГ¬ ГЄГ®Г­ГґГЁГЈ ГЁГ§ appsetting.json
             Configuration.Bind("Project", new Config());
 
-            //подключаем нужный функционал приложения в качестве сервисов
+            //ГЇГ®Г¤ГЄГ«ГѕГ·Г ГҐГ¬ Г­ГіГ¦Г­Г»Г© ГґГіГ­ГЄГ¶ГЁГ®Г­Г Г« ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї Гў ГЄГ Г·ГҐГ±ГІГўГҐ Г±ГҐГ°ГўГЁГ±Г®Гў
             services.AddTransient<ITextFieldsRepository, EFTextFieldsRepository>();
             services.AddTransient<IServiceItemsRepository, EFServiceItemsRepository>();
             services.AddTransient<DataManager>();
 
-            //подключаем контекст БД
+            //ГЇГ®Г¤ГЄГ«ГѕГ·Г ГҐГ¬ ГЄГ®Г­ГІГҐГЄГ±ГІ ГЃГ„
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
 
-            //настраиваем identity систему
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ identity Г±ГЁГ±ГІГҐГ¬Гі
             services.AddIdentity<IdentityUser, IdentityRole>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
@@ -43,7 +43,7 @@ namespace MyCompany
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
-            //настраиваем authentication cookie
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ authentication cookie
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "myCompanyAuth";
@@ -57,67 +57,67 @@ namespace MyCompany
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    options.ClientId = "195182314505-gir85b0tcn2hj4bou882e2thc69887m6.apps.googleusercontent.com";
-                    options.ClientSecret = "n_85INCTbYLZTxlkRfWn9DE_";
+                    options.ClientId = "clientId";
+                    options.ClientSecret = "clientSecret";
                 })
                 .AddFacebook(options =>
                 {
-                    options.ClientId = "4056641191051374";
-                    options.ClientSecret = "84db8d0be77a07385b8c4b68f3b73a58";
+                    options.ClientId = "clientId";
+                    options.ClientSecret = "clientSecret";
                 });
                 
                 
 
-            //настраиваем политику авторизации для Admin area
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ ГЇГ®Г«ГЁГІГЁГЄГі Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГЁ Г¤Г«Гї Admin area
             services.AddAuthorization(x =>
             {
                 x.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
             });
 
-            //настраиваем политику авторизации для Manager area
+            //Г­Г Г±ГІГ°Г ГЁГўГ ГҐГ¬ ГЇГ®Г«ГЁГІГЁГЄГі Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГЁ Г¤Г«Гї Manager area
             services.AddAuthorization(x =>
             {
                 x.AddPolicy("ManagerArea", policy => { policy.RequireRole("manager"); });
             });
 
-            //добавляем сервисы для контроллеров и представлений (MVC)
+            //Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ Г±ГҐГ°ГўГЁГ±Г» Г¤Г«Гї ГЄГ®Г­ГІГ°Г®Г«Г«ГҐГ°Г®Гў ГЁ ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГ© (MVC)
             services.AddControllersWithViews(x =>
                 {
                     x.Conventions.Add(new AdminAreaAuthorization("Admin", "AdminArea"));
                 })
-                //выставляем совместимость с asp.net core 3.0
+                //ГўГ»Г±ГІГ ГўГ«ГїГҐГ¬ Г±Г®ГўГ¬ГҐГ±ГІГЁГ¬Г®Г±ГІГј Г± asp.net core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
 
-            //добавляем сервисы для контроллеров и представлений(MVC)
+            //Г¤Г®ГЎГ ГўГ«ГїГҐГ¬ Г±ГҐГ°ГўГЁГ±Г» Г¤Г«Гї ГЄГ®Г­ГІГ°Г®Г«Г«ГҐГ°Г®Гў ГЁ ГЇГ°ГҐГ¤Г±ГІГ ГўГ«ГҐГ­ГЁГ©(MVC)
             services.AddControllersWithViews(x =>
             {
                 x.Conventions.Add(new AdminAreaAuthorization("Manager", "ManagerArea"));
             })
-                //выставляем совместимость с asp.net core 3.0
+                //ГўГ»Г±ГІГ ГўГ«ГїГҐГ¬ Г±Г®ГўГ¬ГҐГ±ГІГЁГ¬Г®Г±ГІГј Г± asp.net core 3.0
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //!!! порядок регистрации middleware очень важен
+            //!!! ГЇГ®Г°ГїГ¤Г®ГЄ Г°ГҐГЈГЁГ±ГІГ°Г Г¶ГЁГЁ middleware Г®Г·ГҐГ­Гј ГўГ Г¦ГҐГ­
 
-            //в процессе разработки нам важно видеть какие именно ошибки
+            //Гў ГЇГ°Г®Г¶ГҐГ±Г±ГҐ Г°Г Г§Г°Г ГЎГ®ГІГЄГЁ Г­Г Г¬ ГўГ Г¦Г­Г® ГўГЁГ¤ГҐГІГј ГЄГ ГЄГЁГҐ ГЁГ¬ГҐГ­Г­Г® Г®ГёГЁГЎГЄГЁ
             if (env.IsDevelopment()) 
                 app.UseDeveloperExceptionPage();
 
-            //подключаем поддержку статичных файлов в приложении (css, js и т.д.)
+            //ГЇГ®Г¤ГЄГ«ГѕГ·Г ГҐГ¬ ГЇГ®Г¤Г¤ГҐГ°Г¦ГЄГі Г±ГІГ ГІГЁГ·Г­Г»Гµ ГґГ Г©Г«Г®Гў Гў ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГЁ (css, js ГЁ ГІ.Г¤.)
             app.UseStaticFiles();
 
-            //подключаем систему маршрутизации
+            //ГЇГ®Г¤ГЄГ«ГѕГ·Г ГҐГ¬ Г±ГЁГ±ГІГҐГ¬Гі Г¬Г Г°ГёГ°ГіГІГЁГ§Г Г¶ГЁГЁ
             app.UseRouting();
 
-            //подключаем аутентификацию и авторизацию
+            //ГЇГ®Г¤ГЄГ«ГѕГ·Г ГҐГ¬ Г ГіГІГҐГ­ГІГЁГґГЁГЄГ Г¶ГЁГѕ ГЁ Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГѕ
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            //регистриуруем нужные нам маршруты (ендпоинты)
+            //Г°ГҐГЈГЁГ±ГІГ°ГЁГіГ°ГіГҐГ¬ Г­ГіГ¦Г­Г»ГҐ Г­Г Г¬ Г¬Г Г°ГёГ°ГіГІГ» (ГҐГ­Г¤ГЇГ®ГЁГ­ГІГ»)
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("admin", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
